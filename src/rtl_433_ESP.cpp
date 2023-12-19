@@ -34,7 +34,7 @@
 #  include <SPI.h>
 #  if CONFIG_IDF_TARGET_ESP32C3 || CONFIG_IDF_TARGET_ESP32S3
 SPIClass newSPI(FSPI);
-#  elif CONFIG_IDF_TARGET_ESP32
+#  else
 SPIClass newSPI(VSPI);
 #  endif
 #endif
@@ -59,14 +59,14 @@ Module* _mod = radio.getMod();
 
 /*----------------------------- rtl_433_ESP Internals -----------------------------*/
 
-#define rtl_433_ReceiverTask_Stack    2000
+#define rtl_433_ReceiverTask_Stack    2048
 #define rtl_433_ReceiverTask_Priority 2
 #define rtl_433_ReceiverTask_Core     0
 
-/*----------------------------- Initalize variables -----------------------------*/
+/*----------------------------- Initialize variables -----------------------------*/
 
 /**
- * Is the receiver currently receving a signal
+ * Is the receiver currently receiving a signal
  */
 static bool receiveMode = false;
 
@@ -135,7 +135,7 @@ rtl_433_ESP::rtl_433_ESP() {
 }
 
 /**
- * @brief Initalize Transceiver and rtl_433 decoders
+ * @brief Initialize Transceiver and rtl_433 decoders
  * 
  * @param inputPin - GPIO of receiver
  * @param receiveFrequency - receive frequency
@@ -168,7 +168,7 @@ void rtl_433_ESP::initReceiver(byte inputPin, float receiveFrequency) {
   newSPI.begin(RF_MODULE_SCK, RF_MODULE_MISO, RF_MODULE_MOSI, RF_MODULE_CS);
 #endif
 
-  /*----------------------------- Initalize Transceiver -----------------------------*/
+  /*----------------------------- Initialize Transceiver -----------------------------*/
 
 #ifdef RF_CC1101
   int state = radio.begin();
@@ -417,7 +417,7 @@ void rtl_433_ESP::resetReceiver() {
 }
 
 /**
- * @brief Enable signal reciever logic
+ * @brief Enable signal receiver logic
  * 
  * @param inputPin 
  */
@@ -611,7 +611,7 @@ void rtl_433_ESP::rtl_433_ReceiverTask(void* pvParameters) {
           totalSignals++;
           if ((_nrpulses > PD_MIN_PULSES) &&
               ((signalEnd - signalStart) >
-               MINIMUM_SIGNAL_LENGTH)) // Minumum signal length of MINIMUM_SIGNAL_LENGTH MS
+               MINIMUM_SIGNAL_LENGTH)) // Minimum signal length of MINIMUM_SIGNAL_LENGTH MS
           {
             _pulseTrains[_actualPulseTrain].num_pulses = _nrpulses + 1;
             _pulseTrains[_actualPulseTrain].signalDuration =
