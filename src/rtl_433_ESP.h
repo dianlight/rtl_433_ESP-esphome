@@ -40,6 +40,7 @@
 
 // RadioLib Library setup
 
+#define RADIOLIB_GODMODE
 #define RADIOLIB_LOW_LEVEL
 
 #include <RadioLib.h>
@@ -206,8 +207,7 @@
       } else {                                                            \
         logprintfLn(LOG_ERR, STR_MODULE " " FUNCTION " failed, code: %d", \
                     STATEVAR);                                            \
-        while (true)                                                      \
-          ;                                                               \
+        while (true);                                                     \
       }                                                                   \
     }
 #else
@@ -216,8 +216,7 @@
       if ((STATEVAR) != RADIOLIB_ERR_NONE) {                              \
         logprintfLn(LOG_ERR, STR_MODULE " " FUNCTION " failed, code: %d", \
                     STATEVAR);                                            \
-        while (true)                                                      \
-          ;                                                               \
+        while (true);                                                     \
       }                                                                   \
     }
 #endif
