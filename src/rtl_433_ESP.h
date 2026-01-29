@@ -39,10 +39,6 @@
 #endif
 
 // RadioLib Library setup
-
-#define RADIOLIB_GODMODE
-#define RADIOLIB_LOW_LEVEL
-
 #include <RadioLib.h>
 
 /*----------------------------- Optional Compiler Definitions -----------------------------*/
