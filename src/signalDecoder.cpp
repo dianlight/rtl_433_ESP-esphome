@@ -42,7 +42,11 @@
 #endif
 
 #define rtl_433_Decoder_Priority 2
-#define rtl_433_Decoder_Core     1
+#if CONFIG_IDF_TARGET_ESP32C3
+#  define rtl_433_Decoder_Core tskNO_AFFINITY
+#else
+#  define rtl_433_Decoder_Core 1
+#endif
 
 /*----------------------------- rtl_433_ESP Internals -----------------------------*/
 

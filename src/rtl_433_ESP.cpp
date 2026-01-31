@@ -61,7 +61,12 @@ Module* _mod = radio.getMod();
 
 #define rtl_433_ReceiverTask_Stack    2048
 #define rtl_433_ReceiverTask_Priority 2
-#define rtl_433_ReceiverTask_Core     0
+
+#if CONFIG_IDF_TARGET_ESP32C3
+#  define rtl_433_ReceiverTask_Core tskNO_AFFINITY
+#else
+#  define rtl_433_ReceiverTask_Core 0
+#endif
 
 /*----------------------------- Initialize variables -----------------------------*/
 
